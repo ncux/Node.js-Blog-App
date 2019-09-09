@@ -21,6 +21,7 @@ module.exports.routes = {
   'GET /posts': 'PostsController.posts',
   'GET /posts/:id': 'PostsController.post',
   'POST /posts/create': 'PostsController.create',
+  'PUT /posts/:id': 'PostsController.update',
   'DELETE /posts/:id': 'PostsController.delete',
 
 

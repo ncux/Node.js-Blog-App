@@ -33,6 +33,17 @@ module.exports = {
     }
   },
 
+  // update a post
+  update: async (req, res) => {
+    try {
+      const id = req.param('id');
+      await Post.updateOne(id).set({ title: req.body.title, body: req.body.body });
+      res.send(`post ${id} was successfully updated!`);
+    } catch (err) {
+      return res.serverError(err.toString());
+    }
+  },
+
   // delete a post
   delete: async (req, res) => {
     try {
