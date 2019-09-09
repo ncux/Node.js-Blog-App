@@ -1,30 +1,46 @@
 
-const post_1 = { id: 1, title: 'title_1', body: 'body_1' };
-const post_2 = { id: 2, title: 'title_2', body: 'body_2' };
-const post_3 = { id: 3, title: 'title_3', body: 'body_3' };
-
-const Posts = [post_2, post_1, post_3];
-
-
 module.exports = {
 
-  create: function(req, res) {
-    const post_4 = { id: Posts.length+1, title: req.param('title'), body: req.param('body') };
-    Posts.push(post_4);
-    res.send(Posts);
+  // create a new post
+  create: async (req, res) => {
+    const { title, body } = { title: req.body.title, body: req.body.body };
+    try {
+      await Post.create({ title, body });
+      res.send(`post successfully created!`);
+    } catch (err) {
+      return res.serverError(err.toString());
+    }
   },
 
-  posts: function (req, res) {
-    res.send(Posts);
+  // get all posts
+  posts: async (req, res) => {
+    try {
+      const posts = await Post.find();
+      res.send(posts);
+    } catch (err) {
+      return res.serverError(err.toString());
+    }
   },
 
-  post: function (req, res) {
-    const id = req.param('id');
-    const posts = Posts.filter(post => post.id == id);
-    if(posts.length > 0) {
-      res.send(posts[0]);
-    } else {
-      res.status(400).send(`Post with ID ${id} wasn't found!`);
+  // get a post by ID
+  post: async (req, res) => {
+    try {
+      const id = req.param('id');
+      const post = await Post.findOne(id);
+      res.send(post);
+    } catch (err) {
+      return res.serverError(err.toString());
+    }
+  },
+
+  // delete a post
+  delete: async (req, res) => {
+    try {
+      const id = req.param('id');
+      await Post.destroy({ id });
+      res.send(`post ${id} was successfully deleted!`);
+    } catch (err) {
+      return res.serverError(err.toString());
     }
   }
 
