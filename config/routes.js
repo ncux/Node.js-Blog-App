@@ -18,11 +18,19 @@ module.exports.routes = {
 
   '/': { view: 'pages/homepage' },
 
+  // REST endpoints
   'GET /posts': 'PostsController.posts',
   'GET /posts/:id': 'PostsController.post',
   'POST /posts/create': 'PostsController.create',
-  'PUT /posts/:id': 'PostsController.update',
-  'DELETE /posts/:id': 'PostsController.delete',
+  'PUT /posts/update/:id': 'PostsController.update',
+  'DELETE /posts/delete/:id': 'PostsController.delete',
+
+  // render templates
+  'GET /home': 'pages/home',
+  'GET /posts/new': 'pages/create-post-form',
+  'GET /posts/details/:id': 'pages/post-detail',
+  'GET /posts/edit/:id': 'pages/post-detail',
+
 
 
 

@@ -6,7 +6,7 @@ module.exports = {
     const { title, body } = { title: req.body.title, body: req.body.body };
     try {
       await Post.create({ title, body });
-      res.send(`post successfully created!`);
+      res.redirect('/home');
     } catch (err) {
       return res.serverError(err.toString());
     }
@@ -15,7 +15,7 @@ module.exports = {
   // get all posts
   posts: async (req, res) => {
     try {
-      const posts = await Post.find();
+      const posts = await Post.find().sort({ createdAt: 'DESC' });
       res.send(posts);
     } catch (err) {
       return res.serverError(err.toString());
